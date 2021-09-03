@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Js Gallery</title>
+    <style>
+       #title{
+         text-align: center;
+           color: tomato;
+       }
+
+        #upload{
+            display: none;
+        }
+        #uploader{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+        }
+        #uploader img{
+            width: 50px;
+            padding: 10px;
+            background-color: lightskyblue;
+            border-radius: 20px;
+        }
+        #gallery{
+            width: 900px;
+            margin: 10px auto;
+            columns: 3 250px;
+        }
+        .gallery-img{
+            width: 100%;
+            margin: 10px 10px;
+            border-radius: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="title">JS Gallery</h1>
+    <div id="uploader">
+        <img src="file.png" alt="">
+    </div>
+    <input type="file" id="upload" accept="image/jpeg" multiple>
+
+
+    <div id="gallery"></div>
+
+    <script>
+        let upload = document.getElementById("upload");
+        let gallery = document.getElementById("gallery");
+        let preview = document.getElementById("preview");
+        let uploader = document.getElementById("uploader");
+        uploader.addEventListener('click',function () {
+            upload.click();
+        })
+
+        function addToGallery(src){
+            let img = new Image();
+            img.src = src;
+            img.classList ="gallery-img";
+            gallery.appendChild(img);
+
+        }
+
+        upload.addEventListener('change',function () {
+            let photo = this.files;
+            for (let i=0;i<photo.length;i++){
+                const reader = new FileReader();
+                reader.addEventListener('load',function () {
+                    addToGallery(reader.result);
+                })
+                reader.readAsDataURL(photo[i]);
+                console.log(photo[i]);
+            }
+
+        })
+
+    </script>
+</body>
+</html>
